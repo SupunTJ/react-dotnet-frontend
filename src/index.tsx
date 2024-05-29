@@ -6,6 +6,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap-icons/font/bootstrap-icons.json";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { Provider } from "react-redux";
+import { store } from "./Storage";
 
 import { BrowserRouter } from "react-router-dom";
 
@@ -13,9 +15,11 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 //https://redmango.azurewebsites.net/
