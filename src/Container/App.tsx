@@ -1,6 +1,9 @@
 import React from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
+  AccessDenied,
+  AuthenticationTest,
+  AuthorizationTestAdmin,
   Home,
   Login,
   MenuItemDetails,
@@ -10,19 +13,21 @@ import {
 } from "../Pages";
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetShoppingCartQuery } from "../Apis/shoppingCartApi";
 import { setShoppingCart } from "../Storage/Redux/shoppingCartSlice";
 import { userModel } from "../Interfaces";
 import jwt_decode from "jwt-decode";
 import { setLoggedInUser } from "../Storage/Redux/userAuthSclice";
+import { RootState } from "../Storage/Redux/store";
 
 function App() {
   const dispatch = useDispatch();
-
-  const { data, isLoading } = useGetShoppingCartQuery(
-    "b7ae37bf-09b1-4b47-9ce1-c963031d2920"
+  const userData: userModel = useSelector(
+    (state: RootState) => state.userAuthStore
   );
+
+  const { data, isLoading } = useGetShoppingCartQuery(userData.id);
 
   useEffect(() => {
     if (!isLoading) {
@@ -52,6 +57,17 @@ function App() {
           <Route path="/shoppingCart" element={<ShoppingCart />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+
+          <Route
+            path="/authentication"
+            element={<AuthenticationTest />}
+          ></Route>
+          <Route
+            path="/authorization"
+            element={<AuthorizationTestAdmin />}
+          ></Route>
+          <Route path="/accessDenied" element={<AccessDenied />}></Route>
+
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
