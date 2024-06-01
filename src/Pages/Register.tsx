@@ -38,9 +38,9 @@ function Register() {
     if (response.data) {
       toastNotify("Registration Successful! Please Login to Continue...");
       navigate("/login");
-      console.log(response.data);
+      // console.log(response.data);
     } else {
-      console.log(response.error.data.errorMessages[0]);
+      // console.log(response.error.data.errorMessages[0]);
       toastNotify(response.error.data.errorMessages[0], "error");
     }
 
