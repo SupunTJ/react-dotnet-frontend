@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { cartItemModel, userModel } from "../../../Interfaces";
+import { apiResponse, cartItemModel, userModel } from "../../../Interfaces";
 import { RootState } from "../../../Storage/Redux/store";
 import { inputHelper } from "../../../Helper";
 import { MiniLoader } from "../Common";
+import { useInitiatePaymentMutation } from "../../../Apis/paymentApi";
+import { useNavigate } from "react-router-dom";
 
 export default function CartPickUpDetails() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +16,9 @@ export default function CartPickUpDetails() {
     (state: RootState) => state.userAuthStore
   );
 
-  let granTotal = 0;
+  const [initiatePayment] = useInitiatePaymentMutation();
+
+  let grandTotal = 0;
   let totalItems = 0;
 
   const initialUserData = {
@@ -25,9 +29,11 @@ export default function CartPickUpDetails() {
 
   shoppingCartFromStore?.map((cartItem: cartItemModel) => {
     totalItems += cartItem.quantity ?? 0;
-    granTotal += (cartItem.menuItem?.price ?? 0) * (cartItem.quantity ?? 0);
+    grandTotal += (cartItem.menuItem?.price ?? 0) * (cartItem.quantity ?? 0);
     return null;
   });
+
+  const navigate = useNavigate();
 
   const [userInput, setUserInput] = useState(initialUserData);
 
@@ -39,6 +45,13 @@ export default function CartPickUpDetails() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    const { data }: apiResponse = await initiatePayment(userData.id);
+    const orderSummary = { grandTotal, totalItems };
+    console.log(data);
+    navigate("/payment", {
+      state: { apiResult: data?.result, userData, orderSummary },
+    });
   };
 
   return (
@@ -87,7 +100,7 @@ export default function CartPickUpDetails() {
         </div>
         <div className="form-group mt-3">
           <div className="card p-3" style={{ background: "ghostwhite" }}>
-            <h5>Grand Total : ${granTotal.toFixed(2)}</h5>
+            <h5>Grand Total : ${grandTotal.toFixed(2)}</h5>
             <h5>No of items : {totalItems}</h5>
           </div>
         </div>

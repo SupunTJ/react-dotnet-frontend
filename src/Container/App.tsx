@@ -8,6 +8,7 @@ import {
   Login,
   MenuItemDetails,
   NotFound,
+  Payment,
   Register,
   ShoppingCart,
 } from "../Pages";
@@ -67,7 +68,7 @@ function App() {
             element={<AuthorizationTestAdmin />}
           ></Route>
           <Route path="/accessDenied" element={<AccessDenied />}></Route>
-
+          <Route path="/payment" element={<Payment />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
