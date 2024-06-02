@@ -9,9 +9,11 @@ import { orderSummaryProps } from "../Order/OrderSummaryProps";
 import { apiResponse, cartItemModel } from "../../../Interfaces";
 import { useCreateOrderMutation } from "../../../Apis/orderApi";
 import { SD_Status } from "../../../Utility/SD";
+import { useNavigate } from "react-router-dom";
 
 const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
   const stripe = useStripe();
+  const navigate = useNavigate();
   const elements = useElements();
   const [createOrder] = useCreateOrderMutation();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -19,8 +21,10 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
   console.log(data);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsProcessing(true);
 
     if (!stripe || !elements) {
+      setIsProcessing(false);
       return;
     }
 
@@ -35,6 +39,7 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
     if (result.error) {
       toastNotify("An unexpected error occurred.", "error");
       console.log(result.error.message);
+      setIsProcessing(false);
     } else {
       console.log(result);
 
@@ -66,15 +71,29 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
             ? SD_Status.CONFIRMED
             : SD_Status.PENDING,
       });
-      console.log(response);
+      if (response) {
+        if (response.data?.result.status === SD_Status.CONFIRMED) {
+          navigate(
+            `/order/orderConfirmed/${response.data.result.orderHeaderId}`
+          );
+        } else {
+          navigate("/faild");
+        }
+      }
     }
+    setIsProcessing(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button className="btn btn-success mt-5 w-100" disabled={isProcessing}>
-        {isProcessing ? "Processing..." : "Submit"}
+      <button
+        disabled={!stripe || isProcessing}
+        className="btn btn-success mt-5 w-100"
+      >
+        <span id="button-text">
+          {isProcessing ? "Processing..." : "Submit Order"}
+        </span>
       </button>
     </form>
   );
