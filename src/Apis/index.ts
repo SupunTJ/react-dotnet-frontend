@@ -2,5 +2,6 @@ import menuItemApi from "./menuItemApi";
 import shoppingCartApi from "./shoppingCartApi";
 import authApi from "./authApi";
 import paymentApi from "./paymentApi";
+import orderApi from "./orderApi";
 
-export { menuItemApi, paymentApi, shoppingCartApi, authApi };
+export { menuItemApi, orderApi, paymentApi, shoppingCartApi, authApi };
