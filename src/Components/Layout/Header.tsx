@@ -64,6 +64,15 @@ function Header() {
                   <i className="bi bi-cart"></i>
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link "
+                  aria-current="page"
+                  to="/order/myOrders"
+                >
+                  My Orders
+                </NavLink>
+              </li>
 
               {/* <li className="nav-item">
                 <NavLink

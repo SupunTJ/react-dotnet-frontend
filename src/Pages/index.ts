@@ -9,7 +9,9 @@ import AuthenticationTest from "./AuthenticationTest";
 import AuthorizationTestAdmin from "./AuthorizationTestAdmin";
 import Payment from "./Payment";
 import OrderConfirmed from "./Order/OrderConfirmed";
+import MyOrders from "./Order/MyOrders";
 export {
+  MyOrders,
   Home,
   NotFound,
   MenuItemDetails,
