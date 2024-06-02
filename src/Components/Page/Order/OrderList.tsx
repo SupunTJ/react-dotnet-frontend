@@ -1,8 +1,9 @@
 import React from "react";
-import { orderHeaderModel } from "../../Interfaces";
-import { MainLoader } from "../../Components/Page/Common";
+import { orderHeaderModel } from "../../../Interfaces";
+import { MainLoader } from "../Common";
 import orderListProps from "./orderListType";
 import { useNavigate } from "react-router-dom";
+import { getStatusColor } from "../../../Helper";
 
 function OrderList({ isLoading, orderData }: orderListProps) {
   const navigate = useNavigate();
@@ -20,9 +21,12 @@ function OrderList({ isLoading, orderData }: orderListProps) {
               <div className="col-1">Total</div>
               <div className="col-1">Items</div>
               <div className="col-2">Date</div>
+              <div className="col-2">Status</div>
+
               <div className="col-2"></div>
             </div>
             {orderData.map((orderItem: orderHeaderModel) => {
+              const badgeColor = getStatusColor(orderItem.status!);
               return (
                 <div className="row border" key={orderItem.orderHeaderId}>
                   <div className="col-1">{orderItem.orderHeaderId}</div>
@@ -34,6 +38,11 @@ function OrderList({ isLoading, orderData }: orderListProps) {
                   <div className="col-1">{orderItem.totalItems}</div>
                   <div className="col-2">
                     {new Date(orderItem.orderDate!).toLocaleDateString()}
+                  </div>
+                  <div className="col-2">
+                    <span className={`badge bg-${badgeColor}`}>
+                      {orderItem.status}
+                    </span>
                   </div>
                   <div className="col-2">
                     <button

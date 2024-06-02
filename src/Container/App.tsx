@@ -2,6 +2,7 @@ import React from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
   AccessDenied,
+  AllOrders,
   AuthenticationTest,
   AuthorizationTestAdmin,
   Home,
@@ -81,6 +82,7 @@ function App() {
             path="/order/orderDetails/:id"
             element={<OrderDetails />}
           ></Route>
+          <Route path="/order/allOrders" element={<AllOrders />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
