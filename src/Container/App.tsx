@@ -10,6 +10,7 @@ import {
   MyOrders,
   NotFound,
   OrderConfirmed,
+  OrderDetails,
   Payment,
   Register,
   ShoppingCart,
@@ -76,6 +77,10 @@ function App() {
             element={<OrderConfirmed />}
           ></Route>
           <Route path="/order/myOrders" element={<MyOrders />}></Route>
+          <Route
+            path="/order/orderDetails/:id"
+            element={<OrderDetails />}
+          ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

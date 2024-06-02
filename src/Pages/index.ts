@@ -10,7 +10,11 @@ import AuthorizationTestAdmin from "./AuthorizationTestAdmin";
 import Payment from "./Payment";
 import OrderConfirmed from "./Order/OrderConfirmed";
 import MyOrders from "./Order/MyOrders";
+import OrderList from "./Order/OrderList";
+import OrderDetails from "./Order/OrderDetails";
 export {
+  OrderDetails,
+  OrderList,
   MyOrders,
   Home,
   NotFound,
