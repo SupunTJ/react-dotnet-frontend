@@ -8,6 +8,8 @@ import {
   Home,
   Login,
   MenuItemDetails,
+  MenuItemList,
+  MenuItemUpsert,
   MyOrders,
   NotFound,
   OrderConfirmed,
@@ -83,6 +85,18 @@ function App() {
             element={<OrderDetails />}
           ></Route>
           <Route path="/order/allOrders" element={<AllOrders />}></Route>
+          <Route
+            path="/menuItem/menuItemList"
+            element={<MenuItemList />}
+          ></Route>
+          <Route
+            path="/menuItem/menuItemUpsert/:id"
+            element={<MenuItemUpsert />}
+          ></Route>
+          <Route
+            path="/menuItem/menuItemUpsert"
+            element={<MenuItemUpsert />}
+          ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
