@@ -1,13 +1,30 @@
 import React from "react";
 import { menuItemModel } from "../../Interfaces";
-import { useGetMenuItemsQuery } from "../../Apis/menuItemApi";
+import {
+  useDeleteMenuItemMutation,
+  useGetMenuItemsQuery,
+} from "../../Apis/menuItemApi";
 
 import { MainLoader } from "../../Components/Page/Common";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function MenuItemList() {
   const { data, isLoading } = useGetMenuItemsQuery(null);
   const navigate = useNavigate();
+  const [deleteMenuItem] = useDeleteMenuItemMutation();
+
+  const handleMenuItemDelete = async (id: number) => {
+    toast.promise(
+      deleteMenuItem(id),
+      {
+        pending: "Processing your request...",
+        success: "Menu Item Deleted Successfully 👌",
+        error: "Error encountered 🤯",
+      },
+      { theme: "dark" }
+    );
+  };
 
   return (
     <>
@@ -58,7 +75,10 @@ function MenuItemList() {
                         className="bi bi-pencil-fill"
                       ></i>
                     </button>
-                    <button className="btn btn-danger mx-2">
+                    <button
+                      className="btn btn-danger mx-2"
+                      onClick={() => handleMenuItemDelete(menuItem.id)}
+                    >
                       <i className="bi bi-trash-fill"></i>
                     </button>
                   </div>
