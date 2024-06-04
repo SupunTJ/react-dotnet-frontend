@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./banner.css";
+import { useDispatch } from "react-redux";
+import { setSearchItem } from "../../../Storage/Redux/menuItemSclice";
 
 function Banner() {
+  const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchItem(e.target.value));
+    setValue(e.target.value);
+  };
+
   return (
     <div className="custom-banner">
       <div
@@ -20,6 +29,8 @@ function Banner() {
               padding: "20px 20px",
             }}
             placeholder="Search for Food Items!"
+            value={value}
+            onChange={handleChange}
           />
           <span style={{ position: "relative", left: "-43px" }}>
             <i className="bi bi-search"></i>
