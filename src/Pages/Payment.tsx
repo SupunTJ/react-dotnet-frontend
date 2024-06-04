@@ -11,7 +11,7 @@ function Payment() {
   } = useLocation();
 
   const stripePromise = loadStripe(
-    "pk_test_51MG6xmDU3OjDrP4GJV8avgtFNNGxikOffHWtYgncDFkahat38KLX3foPPgFbk0JHNG2FmYhIpSNl2lqbnR3uEfRM00Bv0LptTW"
+    "pk_test_51OHkI5GhXUw8WryJSSQRP6xoGDk4OICDpuL0xg6KEjqwEW8WTia3n8n1CJ7VDnciUYLtw1JDpN1vyuEn8pXAx0se00gzMd5RtM"
   );
 
   const options = {
